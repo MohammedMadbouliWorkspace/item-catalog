@@ -1,7 +1,21 @@
 import random
 import string
 from flask import Flask
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+from dbsetup import Base, User, Category, Item
+
 item_catalog_app = Flask(__name__)
+
+
+def dbsession(callback, **kwargs):
+    engine = create_engine('sqlite:///catalog.db')
+    Base.metadata.bind = engine
+    _session_ = sessionmaker(bind=engine)
+    session = _session_()
+    callback(session, **kwargs)
+    session.close()
+
 
 def subpath_checker(subpath, rule):
     subpath = subpath.split("/")
