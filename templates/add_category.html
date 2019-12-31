@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Add a new category</title>
+
+    {% include "static/head_config.html" %}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header">
+                    <h1>Add a new Category</h1>
+                </div>
+
+                <div class="previewer_body">
+                    <form class="form_container" action="{{ url_for('addCategory', next=request.args.get('next', '')) }}" method="post" autocomplete="off">
+                        <div>
+                            <div class="input_field">
+                                <label for="name">Category name</label>
+                                <input type="text" name="name" class="field" placeholder="Category name" id="name" required>
+                            </div>
+                            <div class="input_field">
+                                <input type="submit" value="Add" class="button dark_button">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="input_field">
+                                <label>Category colors</label>
+                                <div class="radios_container">
+
+                                    {% for color in colors %}
+
+                                        <input type="radio" name="colors" value="{{ color.id }}" id="{{ color.id }}" required>
+                                        <label for="{{ color.id }}" style="--backgound-color: #{{ color.colors.split(',')[0] }};--foreground-color: #{{ color.colors.split(',')[1] }};"></label>
+
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+    </div>
+</body>
+</html>

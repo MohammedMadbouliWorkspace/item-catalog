@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit a category</title>
+
+    {% include "static/head_config.html"%}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header">
+                    <h1>Edit: Category "{{ category.name }}"</h1>
+                    <div class="update_links">
+                        <a class="a_ul" href="{{ url_for('me') }}">Cancel</a>
+                    </div>
+                </div>
+
+                <div class="previewer_body">
+                    <form class="form_container" action="{{ url_for('editCategory', category_id=category.id, next=request.args.get('next', '')) }}" method="post" autocomplete="off">
+                        <div>
+                            <div class="input_field">
+                                <label for="name">Category name</label>
+                                <input type="text" name="name" class="field" value="{{ category.name }}" placeholder="Category name" id="name" required>
+                            </div>
+                            <div class="input_field">
+                                <input type="submit" value="Apply" class="button dark_button">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="input_field">
+                                <label>Category colors</label>
+                                <div class="radios_container">
+
+                                    {% for color in colors %}
+
+                                        <input type="radio" name="colors" {% if category.colors_id == color.id %} checked {% endif %} value="{{color.id}}" id="{{color.id}}" required>
+                                        <label for="{{color.id}}" style="--backgound-color: #{{color.colors.split(',')[0]}};--foreground-color: #{{color.colors.split(',')[1]}};"></label>
+
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+    </div>
+</body>
+</html>

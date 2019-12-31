@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Delete {{ TYPE }}</title>
+
+    {% include "static/head_config.html" %}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header">
+                    <h1>Are you sure to delete {{ TYPE }} "{{ object.name }}"?</h1>
+                    <div class="update_links update_links_outside">
+                        <form method="post" action="/delete/{{ TYPE }}/{{ object.id }}?next={{ request.args.get('next', '') }}">
+                            <input type="submit" value="Delete" class="button small_button">
+                            <a class="a_ul" href="{{ url_for('me') }}">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+    </div>
+</body>
+</html>

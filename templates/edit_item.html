@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Edit an item</title>
+
+    {% include "static/head_config.html"%}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header">
+                    <h1>Edit: Item "{{ item.name }}"</h1>
+                    <div class="update_links">
+                        <a class="a_ul" href="{{ url_for('me') }}">Cancel</a>
+                    </div>
+                </div>
+
+                <div class="previewer_body">
+                    <form class="form_container" action="{{ url_for('editItem', item_id=item.id, next=request.args.get('next', '')) }}" method="post" autocomplete="off" enctype="multipart/form-data">
+                        <div>
+                            <div class="input_field">
+                                <label for="name">Item name</label>
+                                <input type="text" name="name" value="{{ item.name }}" class="field" placeholder="Item name" id="name" required>
+                            </div>
+                            <div class="input_field">
+                                <label for="description">Item description</label>
+                                <textarea type="text" name="description" class="field" placeholder="Item description" id="description" required>{{ item.description }}</textarea>
+                            </div>
+                            <div class="input_field">
+                                <input type="submit" value="Apply" class="button dark_button">
+                            </div>
+                        </div>
+                        <div>
+                            <div class="input_field">
+                                <label for="category">Category</label>
+                                <div class="select_box">
+                                    <i class="select_box_icon vertical_center"></i>
+                                    <select class="field" name="category" id="category" required>
+                                        <option value="">Choose a category</option>
+
+                                        <optgroup label="Your categories">
+
+                                            {% for category in your_categories %}
+
+                                                <option value="{{ category.id }}" {% if item.category_id == category.id %} selected="selected" {% endif %} >{{ category.name }}</option>
+
+                                            {% endfor %}
+
+                                        </optgroup>
+
+                                        <optgroup label="Others categories">
+
+                                            {% for category in others_categories %}
+
+                                                {% if category.user_id != USER.id %}
+
+                                                    <option value="{{ category.id }}">{{ category.name }}</option>
+
+                                                {% endif %}
+
+                                            {% endfor %}
+
+                                        </optgroup>
+
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="input_field">
+                                <label for="image">Item picture</label>
+                                <div class="image_uploader">
+                                    <label for="image" class="button" id="imageLoaderButton">Choose file</label>
+                                    <input type="file" name="image" accept=".png,.jpg,.jpeg,.gif" onchange="readURL(this)" id="image">
+                                    <div id="imagePreviewer" style="--image: url('{{ item.image }}');--placeholder-text: unset;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+        <script src="{{ url_for('resources', filename='js/file_uploader.js') }}"></script>
+
+    </div>
+</body>
+</html>

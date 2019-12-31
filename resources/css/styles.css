@@ -1,0 +1,750 @@
+@import url('https://fonts.googleapis.com/css?family=Quicksand:300,400,500,600,700&display=swap');
+
+body {
+    font-family: 'Quicksand', sans-serif;
+    color: #424242;
+}
+
+a {
+    color: unset;
+    text-decoration: unset;
+}
+
+h1,h2,h3,h4,h5,h6,p{margin:0;text-overflow:ellipsis}
+
+.container {
+    width: 960px;
+    border-width: 0 1px;
+    border-color: #eee;
+    border-style: solid;
+    background-color: #f5f5f5;
+    position: fixed;
+    bottom: 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.vertical_center {
+    position: absolute !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+}
+
+.vertical_center_rel {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.button {
+    height: 100%;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.button, .field {
+    background-color: #f5f5f5;
+    border: 1px solid #d2d2d2;
+    border-radius: 3px;
+    padding: 0 15px;
+    box-sizing: border-box;
+    transition: .25s ease-in-out;
+    outline: none;
+}
+
+.dark_button {
+    background-color: #00bcd4;
+    border: 1px solid #00acc1;
+    color: #fbfbfb;
+}
+
+.small_button {
+    height: 30px;
+    padding: 0 10px;
+}
+
+.field {
+    display: block;
+    width: 100%;
+    height: 40px;
+}
+
+.field:focus {
+    border: 1px solid #00bcd4;
+}
+
+.button:hover {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.15)
+}
+
+.button:active {
+    background-color: #d2d2d2;
+}
+
+.dark_button:active {
+    background-color: #00acc1;
+}
+
+.t_button {
+    background-color: transparent;
+    color: var(--foreground-color);
+    border: 0;
+}
+
+.t_button:active {
+    background-color: var(--foreground-color);
+    color: var(--backgound-color);
+}
+
+.username > a::before {
+    content: "@";
+}
+
+.a_ul:hover {
+    text-decoration: underline;
+}
+
+.content_block > h2 {
+    font-weight: 400;
+    padding: 20px;
+    border-bottom: 5px solid #00bcd4;
+    background-color: #f5f5f5;
+}
+
+.content_block > p {
+    padding: 20px;
+    line-height: 1.7;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    word-break: break-word;
+}
+
+.content_block > img {
+    width: 100%;
+}
+
+.content_block_dark > h2 {
+    background-color: #424242;
+    color: #f5f5f5;
+}
+
+.category {
+    font-size: 15px;
+    margin-left: 10px;
+    background-color: var(--backgound-color);
+    color: var(--foreground-color);
+    padding: 2px 5px;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+.centered {
+    display: flex;
+    align-items: center;
+}
+
+.update_links {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 10px 15px;
+    color: #bdbdbd;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.update_links_outside {
+    bottom: -50px;
+    color: #424242;
+}
+
+.update_links a {
+    display: inline-block;
+    padding: 5px;
+}
+
+
+@keyframes overlay-appear {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes overlay-disappear {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    animation: overlay-appear 0.15s ease-in-out both;
+}
+
+.overlay .dialog {
+    position: absolute;
+    width: 500px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.overlay .dialog .content_block h2 {
+    position: relative;
+}
+
+.overlay .dialog .content_block h2 .update_links {
+    font-size: 15px;
+}
+
+.overlay .dialog .content_block > div {
+    height: 135px;
+    background-color: #fbfbfb;
+    position: relative;
+}
+
+.overlay .dialog .content_block > div #signInButton {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.empty_content {
+    padding: 30px;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.25);
+}
+
+.empty_content h3 {
+    display: inline-block;
+}
+
+/* header styles */
+.header {
+    position: fixed;
+    height: 80px;
+    width: inherit;
+    background-color: #f5f5f5;
+    z-index: 1000000;
+    border-bottom: 5px solid #00bcd4;
+}
+
+.header > div {
+    position: relative;
+    height: 100%;
+}
+
+.header .left_section {
+    display: inline-grid;
+    grid-template-columns: calc(80px * 0.75) auto;
+    left: 15px;
+    height: 75%;
+}
+
+.header .left_section > div {
+    height: 100%;
+}
+
+.header .left_section > div .avatar {
+    border-radius: 50%;
+    height: 100%;
+    overflow: hidden;
+    box-sizing: border-box;
+    background-color: #00BCD4;
+}
+
+.header .left_section > div .avatar img {
+    display: block;
+    height: 100%;
+    width: 100%;
+}
+
+.header .left_section > div .user_info_labels {
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    padding-left: 15px;
+}
+
+.header .left_section > div .user_info_labels label {
+    display: inline-block;
+}
+
+.header .left_section > div .user_info_labels .name_label {
+    position: relative;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.header .left_section > div .user_info_labels .name_label label {
+    cursor: text;
+}
+
+.header .left_section > div .user_info_labels .name_label .edit_icon {
+    font-size: 15px;
+    margin-left: 5px;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.header .left_section > div .user_info_labels .name_label label > .edit_icon {
+    visibility: hidden;
+}
+
+.header .left_section > div .user_info_labels .name_label .edit_field input {
+    background: transparent;
+    vertical-align: middle;
+    width: 150px;
+    font-weight: 500;
+    border: 0;
+    margin: 0;
+    outline: 0;
+    padding: 0;
+}
+
+.header .left_section > div .user_info_labels .name_label .edit_field #nameApplyEditButton {
+    color: #009688;
+}
+
+.header .left_section > div .user_info_labels .name_label .edit_field #nameCancelEditButton {
+    color: #C62828;
+}
+
+.header .left_section > div .user_info_labels .name_label .edit_field > .edit_icon {
+    background: transparent;
+    font-weight: 500;
+    border: 0;
+    outline: 0;
+    padding: 0;
+}
+
+.header .left_section > div .user_info_labels .name_label:hover .edit_icon {
+    visibility: visible;
+}
+
+.header .left_section > div .user_info_labels .username_label {
+    font-size: 15px;
+}
+
+.header .right_section {
+    right: 15px;
+    height: 50%;
+}
+
+.content {
+    margin-top: 85px;
+    display: grid;
+    grid-template-columns: auto 30% repeat(3, 0);
+    grid-auto-rows: min-content auto;
+    grid-column-gap: 0;
+    grid-row-gap: 0;
+    height: calc(100% - 85px/2);
+}
+
+.content .flash {
+    grid-area: 1 / 1 / 2 / 3;
+}
+
+.content .flash .message {
+    padding: 15px;
+    color: #fbfbfb;
+    background-color: #00bcd4;
+    font-weight: 500;
+    transition: 0.25s ease-in-out;
+    transform-origin: top;
+}
+
+.content .flash .message a {
+    color: #424242;
+}
+
+.content section {
+    height: inherit;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.content .site_navigation {
+    grid-area: 2 / 2 / 3 / 3;
+}
+
+.content .site_navigation nav {
+    padding: 35px 0;
+}
+
+.content .site_navigation nav div {
+    margin-bottom: 25px;
+    padding-left: 30px;
+}
+
+.content .site_navigation nav div h3 {
+    margin: 0 0 10px 0;
+    font-weight: 600;
+}
+
+.content .site_navigation nav div ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.content .site_navigation nav div ul li {
+    margin-bottom: 10px;
+}
+
+.content .previewer {
+    background-color: #fbfbfb;
+    grid-area: 2 / 1 / 3 / 2;
+}
+
+.content .previewer .previewer_header {
+    position: relative;
+    background-color: #424242;
+    color: #f5f5f5;
+    padding: 25px 0;
+    margin: 0;
+}
+
+.content .previewer .previewer_header.in_profile {
+    display: grid;
+    grid-template-columns: 120px auto;
+}
+
+.content .previewer .previewer_header.in_category {
+    --backgound-color: #E91E63;
+    --foreground-color: #fbfbfb;
+    color: var(--foreground-color);
+}
+
+.content .previewer .previewer_header.in_profile,
+.content .previewer .previewer_header.in_category {
+    position: relative;
+    height: 120px;
+    padding-left: 25px;
+    overflow: hidden;
+}
+
+.content .previewer .previewer_header.in_profile .backdrop_blur {
+    --background-image: url('https://picsum.photos/700/190');
+    position: absolute;
+    top: -15px;
+    bottom: -15px;
+    left: -15px;
+    right: -15px;
+    z-index: 0;
+    background: var(--background-image) no-repeat center;
+    background-size: cover;
+    filter: blur(15px);
+}
+
+.content .previewer .previewer_header.in_category .backdrop_blur {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    background-color: var(--backgound-color);
+}
+
+.content .previewer .previewer_header.in_profile .backdrop_blur > div {
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0,0,0,0.75) 20%, rgba(0,0,0,0) 100%);
+}
+
+.content .previewer .previewer_header.in_category .backdrop_blur > div {
+    width: 200px;
+    height: 100%;
+    position: relative;
+    float: right;
+    background: #424242;
+    transform: skewX(-35deg);
+    right: -65px;
+}
+
+.content .previewer .previewer_header.in_profile div.avatar {
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 0;
+    border: 5px solid #f5f5f5;
+}
+
+.content .previewer .previewer_header.in_profile div.avatar img {
+    height: 100%;
+}
+
+.content .previewer .previewer_header.in_profile > div.vertical_center {
+    left: 145px;
+}
+
+.content .previewer .previewer_header h1,
+.content .previewer .previewer_header h3 {
+    padding: 0 30px;
+}
+
+.content .previewer .previewer_header.in_category h1 {
+    margin-bottom: 5px;
+}
+
+.content .previewer .previewer_body .preview_card {
+    display: grid;
+    grid-template-columns: 150px auto;
+    position: relative;
+    height: 150px;
+    background-color: #fbfbfb;
+    transition: 0.15s ease-in-out;
+    padding: 15px;
+}
+
+.content .previewer .previewer_body .preview_card:hover {
+    box-shadow: 0 5px 20px 0 rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+
+.content .previewer .previewer_body .preview_card.no_thumbnail {
+    grid-template-columns: auto;
+}
+
+.content .previewer .previewer_body .preview_card .card_thumbnail {
+    background: var(--image) no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.content .previewer .previewer_body .preview_card .card_thumbnail img {
+    width: 100%;
+}
+
+.content .previewer .previewer_body .preview_card .card_info {
+    padding-left: 15px;
+}
+
+.content .previewer .previewer_body .preview_card .card_info > div {
+    margin-top: 10px;
+}
+
+.content .previewer .previewer_body .preview_card .card_info .card_info_heading {
+    position: relative;
+}
+
+.content .previewer .previewer_body .preview_card .card_info .card_info_heading h3 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.content .previewer .previewer_body .preview_card .card_info .card_info_heading h5 {
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.content .previewer .previewer_body .preview_card .card_info .card_info_heading .card_control {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+}
+
+.content .previewer .previewer_body .preview_card .card_info .card_info_heading .card_control.vertical_center {
+    height: 40px;
+}
+
+.content .previewer .previewer_body .preview_card .card_info p {
+    overflow: hidden;
+    line-height: 1.3;
+    margin-bottom: 5px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    word-break: break-word;
+}
+
+.content .previewer .previewer_body .preview_card .card_info p + a {
+    display: inline-block;
+    font-weight: 300;
+}
+
+.content .previewer .previewer_body .user_card {
+    grid-template-columns: 78px auto;
+    height: unset;
+}
+
+.content .previewer .previewer_body .user_card .card_thumbnail {
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.content .previewer .previewer_body .user_card .card_thumbnail img {
+    width: 100%;
+    display: block;
+}
+
+.content .previewer .previewer_body .user_card .card_info .card_info_heading h3 {
+    font-size: 25px;
+}
+
+.content .previewer .previewer_body .user_card .card_info .card_info_heading h5 {
+    font-size: 18px;
+}
+
+.content .previewer .previewer_body .category_card {
+    --backgound-color: #f5f5f5;
+    --foreground-color: #424242;
+    grid-template-columns: unset;
+    display: block;
+    background-color: var(--backgound-color);
+    color: var(--foreground-color);
+}
+
+.content .previewer .previewer_body .category_card.in_profile .card_info > div {
+    margin: 0;
+}
+
+.content .previewer .previewer_body .form_container {
+    display: grid;
+    grid-template-columns: 50% 50%;
+    padding-top: 20px;
+}
+
+.content .previewer .previewer_body .form_container .input_field {
+    padding: 0 20px;
+    margin-bottom: 20px;
+}
+
+.content .previewer .previewer_body .form_container .input_field label {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.content .previewer .previewer_body .form_container .input_field .select_box {
+    position: relative;
+}
+
+.content .previewer .previewer_body .form_container .input_field .select_box .field {
+    cursor: pointer;
+}
+
+.content .previewer .previewer_body .form_container .input_field .select_box .select_box_icon {
+    right: 1px;
+    height: 38px;
+    width: 20px;
+    background-color: #f5f5f5;
+    border-radius: 3px;
+}
+
+.content .previewer .previewer_body .form_container .input_field textarea {
+    min-height: 300px;
+    padding: 15px;
+    resize: vertical;
+    transition: resize 0s;
+    line-height: 1.7;
+}
+
+.content .previewer .previewer_body .form_container .input_field .image_uploader label.button {
+    --file-name: "No file chosen";
+    position: relative;
+    align-items: center;
+    display: inline-flex;
+    user-select: none;
+}
+
+.content .previewer .previewer_body .form_container .input_field .image_uploader label.button::after {
+    content: var(--file-name);
+    position: absolute;
+    left: 125px;
+    width: 200%;
+    width: max-content;
+    pointer-events: none;
+}
+
+.content .previewer .previewer_body .form_container .input_field .image_uploader input[type="file"] {
+    display: none;
+}
+
+.content .previewer .previewer_body .form_container .input_field input[type="submit"],
+.content .previewer .previewer_body .form_container .input_field .image_uploader label.button {
+    height: 40px;
+}
+
+.content .previewer .previewer_body .form_container .input_field .image_uploader #imagePreviewer {
+    --placeholder-text: "Picture preview";
+    --image: none;
+    position: relative;
+    height: 290px;
+    background: var(--image) no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #717171;
+    color: #fbfbfb;
+    border-radius: 3px;
+    border: 10px solid #424242;
+    box-sizing: border-box;
+    transition: 1s .25s ease-in-out;
+}
+
+.content .previewer .previewer_body .form_container .input_field .image_uploader #imagePreviewer::after {
+    content: var(--placeholder-text);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.content .previewer .previewer_body .form_container .radios_container {
+    overflow: hidden;
+}
+
+.content .previewer .previewer_body .form_container .radios_container input[type="radio"] {
+    display: none;
+}
+
+.content .previewer .previewer_body .form_container .radios_container label {
+    --backgound-color: #e91e63;
+    --foreground-color: #fbfbfb;
+    position: relative;
+    width: calc(100% / 3 - 10px);
+    height: 40px;
+    background-color: var(--backgound-color);
+    color: var(--foreground-color);
+    float: left;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+.content .previewer .previewer_body .form_container .radios_container label::after {
+    content: "ABCDEF";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: bold;
+}
+
+.content .previewer .previewer_body .form_container .radios_container input[type="radio"]:checked + label {
+    border: 2px solid #00bcd4;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.25);
+    transition: .15s ease-in-out;
+}

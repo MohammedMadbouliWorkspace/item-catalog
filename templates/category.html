@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ category.name }}</title>
+
+    {% include "static/head_config.html" %}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header in_category" style="--backgound-color: #{{ category.colors.colors.split(',')[0] }}; --foreground-color: #{{ category.colors.colors.split(',')[1] }};">
+                    <div class="backdrop_blur">
+                        <div></div>
+                    </div>
+                    <div class="vertical_center">
+                        <h1>{{ category.name }}</h1>
+                        <h3>Added by <span class="username a_ul"><a class="a_ul" href="{{ url_for('profileNested', pointer=category.user.username) }}">{{ category.user.username }}</a></span></h3>
+                    </div>
+
+                    {% if USER.id == category.user.id %}
+
+                        <div class="update_links">
+                            <a class="a_ul" href="{{ url_for('editCategory', category_id=category.id, next=request.path) }}">Edit</a>
+                            <a class="a_ul" href="{{ url_for('deleteCategory', category_id=category.id, next=request.path) }}">Delete</a>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="previewer_body">
+                    <div class="content_block">
+                    <h2>All items in {{ category.name }}</h2>
+
+                    {% if items %}
+
+                        {% for item in items %}
+
+                            {% include "portable/item_card_in_category.html" %}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="empty_content">
+                            <h3>No thing</h3>
+                        </div>
+
+                    {% endif %}
+
+                    </div>
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+    </div>
+</body>
+</html>

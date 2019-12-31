@@ -1,44 +1,90 @@
 <div class="header">
     <div>
-        <div class="left_section vertical_center">
 
-            <div>
-                <div class="avatar">
-                    <img src="https://picsum.photos/80/80?grayscale">
-                </div>
-            </div>
+        {% if USER %}
 
-            <div>
+            <div class="left_section vertical_center">
 
-                <div class="user_info_labels">
-
-                    <div class="name_label">
-                        <label id="nameLabel">
-                            <span id="nameHolder">Name</span>
-                            <span id="nameEditButton" class="edit_icon">
-                                <i class="fas fa-pen"></i>
-                            </span>
-                        </label>
+                <div>
+                    <div class="avatar">
+                        <img src="{{USER.image}}">
                     </div>
-
-                    <div class="username_label">
-                        <label>
-                            <span class="username">
-                                <a href="/profiles/username" class="a_ul">username</a>
-                            </span>
-                        </label>
-                    </div>
-
                 </div>
 
+                <div>
+
+                    <div class="user_info_labels">
+
+                        <div class="name_label">
+                            <label id="nameLabel">
+                                <span id="nameHolder">{{USER.name}}</span>
+                                <span id="nameEditButton" class="edit_icon">
+                                    <i class="fas fa-pen"></i>
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="username_label">
+                            <label>
+                                <span class="username">
+                                    <a href="/profiles/{{USER.username}}" class="a_ul">{{USER.username}}</a>
+                                </span>
+                            </label>
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
-        </div>
+            <div class="right_section vertical_center">
+                <a class="button" href="/logout">
+                    <span>Log out</span>
+                </a>
+            </div>
 
-        <div class="right_section vertical_center">
-            <a class="button" href="/logout">
-                <span>Log out</span>
-            </a>
-        </div>
+        {% else %}
+
+            <div class="left_section vertical_center">
+
+                <div>
+                    <div class="avatar">
+                        <img src="https://picsum.photos/80/80?grayscale">
+                    </div>
+                </div>
+
+                <div>
+
+                    <div class="user_info_labels">
+
+                        <div class="name_label">
+                            <label id="nameLabel">
+                                <span id="nameHolder">Guest</span>
+                            </label>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="right_section vertical_center">
+                <a class="button" id="toggleLoginDialog">
+                    <span>Log in</span>
+                </a>
+            </div>
+
+            <script src="{{ url_for('resources', filename='js/oauth_providers_initializer.js') }}"></script>
+
+            {% if force_login %}
+
+                <script>toggleLoginDialog.click();</script>
+
+            {% endif %}
+
+        {% endif %}
+
     </div>
 </div>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ user.name }} - {{ user.username }}</title>
+
+    {% include "static/head_config.html" %}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header in_profile">
+                    <div class="backdrop_blur" style="--background-image: url({{ user.image }});">
+                        <div></div>
+                    </div>
+                    <div class="avatar">
+                        <img src="{{ user.image }}">
+                    </div>
+                    <div class="vertical_center">
+                        <h1>{{ user.name }}</h1>
+                        <h3><span class="username a_ul"><a class="a_ul" href="{{ url_for('profileNested', pointer=user.username) }}">{{ user.username }}</a></span></h3>
+                    </div>
+                </div>
+
+                <div class="previewer_body">
+                    <div class="content_block content_block_dark">
+                    <h2>{{ user.name }}'s categories</h2>
+
+                    {% if categories %}
+
+                        {% for category in categories %}
+
+                            <div class="preview_card user_card category_card in_profile" style="--backgound-color: #{{ category.colors.colors.split(',')[0] }};--foreground-color: #{{ category.colors.colors.split(',')[1] }}">
+                                <div class="card_info">
+                                    <div>
+                                        <div class="card_info_heading">
+                                            <h3>
+                                                <a href="{{ url_for('category', category_id=category.id) }}" class="a_ul">{{ category.name }}</a>
+                                            </h3>
+
+                                            {% if USER.id == user.id %}
+
+                                                <div class="card_control vertical_center">
+                                                    <a class="button t_button" href="{{ url_for('editCategory', category_id=category.id, next=request.path) }}">
+                                                        <span>Edit</span>
+                                                    </a>
+                                                    <a class="button t_button" href="{{ url_for('deleteCategory', category_id=category.id, next=request.path) }}">
+                                                        <span>Delete</span>
+                                                    </a>
+                                                </div>
+
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="empty_content">
+                            <h3>No thing</h3>
+                        </div>
+
+                    {% endif %}
+
+                    </div>
+                    <div class="content_block content_block_dark">
+                    <h2>{{ user.name }}'s all items</h2>
+
+                    {% if items %}
+
+                        {% for item in items %}
+
+                            {% include "portable/item_card.html" %}
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <div class="empty_content">
+                            <h3>No thing</h3>
+                        </div>
+
+                    {% endif %}
+
+                    </div>
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+    </div>
+</body>
+</html>

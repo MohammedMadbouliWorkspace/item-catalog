@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>All items</title>
+
+    {% include "static/head_config.html" %}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header">
+                    <h1>All items</h1>
+                </div>
+
+                <div class="previewer_body">
+
+                {% if items %}
+
+                    {% for item in items %}
+
+                        {% include "portable/item_card.html" %}
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty_content">
+                        <h3>No thing</h3>
+                    </div>
+
+                {% endif %}
+
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+    </div>
+</body>
+</html>

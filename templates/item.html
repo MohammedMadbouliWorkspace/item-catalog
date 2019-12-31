@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{{ item.name }}</title>
+
+    {% include "static/head_config.html" %}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header">
+                    <h1 class="centered">
+                        {{ item.name }}
+                        <span class="category a_ul" style="--backgound-color: #{{item.category.colors.colors.split(',')[0]}};--foreground-color: #{{item.category.colors.colors.split(',')[1]}}">
+                            <a href="{{ url_for('category', category_id=item.category.id) }}">{{ item.category.name }}</a>
+                        </span>
+                    </h1>
+                    <h3>Added by <span class="username a_ul"><a href="{{ url_for('profileNested', pointer=item.user.username) }}">{{ item.user.username }}</a></span></h3>
+
+                    {% if USER.id == item.user.id %}
+
+                        <div class="update_links">
+                            <a class="a_ul" href="{{ url_for('editItem', item_id=item.id, next=request.path) }}">Edit</a>
+                            <a class="a_ul" href="{{ url_for('deleteItem', item_id=item.id, next=request.path) }}">Delete</a>
+                        </div>
+
+                    {% endif %}
+
+                </div>
+                <div class="previewer_body">
+                    <div class="content_block">
+                        <h2>Description</h2>
+                        <p>{{ item.description }}</p>
+                    </div>
+
+                    {% if item.image %}
+
+                        <div class="content_block">
+                            <h2>Picture</h2>
+                            <img src="{{ item.image }}">
+                        </div>
+
+                    {% endif %}
+
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+    </div>
+</body>
+</html>

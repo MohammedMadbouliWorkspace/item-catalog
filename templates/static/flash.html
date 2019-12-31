@@ -1,0 +1,33 @@
+<div class="flash" id="flashMessagesContainer">
+
+{% with messages = get_flashed_messages() %}
+
+    {% if messages %}
+
+        <script>
+            var messages = `{% for message in messages %}<p>{{ message }}</p>@@@@@@{% endfor %}`.split("@@@@@@").filter((el)=>{return !!el !== false}),
+                flashMessagesContainer = document.getElementById("flashMessagesContainer");
+
+            for(var i = 0; i < messages.length; i++) {
+                let message = document.createElement("div");
+
+                message.className = "message";
+
+                message.innerHTML = messages[i];
+
+                flashMessagesContainer.insertAdjacentElement("afterbegin", message);
+
+                setTimeout(()=>{
+                    message.style.transform = "scaleY(0)";
+                    setTimeout(()=>{
+                        message.remove()
+                    }, 250)
+                }, 2000 * (i+1));
+            }
+        </script>
+
+    {% endif %}
+
+{% endwith %}
+
+</div>

@@ -1,0 +1,35 @@
+<div class="preview_card {% if not item.image %} no_thumbnail {% endif %} ">
+
+    {% if item.image %}
+
+        <div class="card_thumbnail" style="--image: url('{{ item.image }}');"></div>
+
+    {% endif %}
+
+    <div class="card_info">
+        <div>
+            <div class="card_info_heading">
+                <h3>
+                    <a href="{{ url_for('item', item_id=item.id) }}" class="a_ul">{{ item.name[:26] }}</a>
+                </h3>
+                <h5>Added by <span class="username a_ul"><a href="{{ url_for('profileNested', pointer=item.user.username) }}">{{ item.user.username }}</a></span></h5>
+
+                {% if USER.id == item.user.id %}
+
+                    <div class="card_control">
+                        <a class="button" href="{{ url_for('editItem', item_id=item.id, next=request.path) }}">
+                            <span>Edit</span>
+                        </a>
+                        <a class="button" href="{{ url_for('deleteItem', item_id=item.id, next=request.path) }}">
+                            <span>Delete</span>
+                        </a>
+                    </div>
+
+                {% endif %}
+
+            </div>
+            <p>{{ item.description[:86] }}</p>
+            <a href="{{ url_for('item', item_id=item.id) }}" class="a_ul">Details</a>
+        </div>
+    </div>
+</div>

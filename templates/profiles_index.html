@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>All users</title>
+
+    {% include "static/head_config.html" %}
+
+</head>
+<body>
+    <div class="container">
+
+        {% include "static/header.html" %}
+
+        <div class="content">
+
+            {% include "static/flash.html" %}
+
+            <section class="previewer">
+                <div class="previewer_header">
+                    <h1>All users</h1>
+                </div>
+
+                <div class="previewer_body">
+
+                {% if users %}
+
+                    {% for user in users %}
+
+                        <div class="preview_card user_card">
+                            <div class="card_thumbnail">
+                                <img src="{{ user.image }}">
+                            </div>
+                            <div class="card_info">
+                                <div>
+                                    <div class="card_info_heading">
+                                        <h3>
+                                            <a href="{{ url_for('profileNested', pointer=user.username) }}" class="a_ul">{{ user.name }}</a>
+                                        </h3>
+                                        <h5>
+                                            <span class="username a_ul">
+                                                <a href="{{ url_for('profileNested', pointer=user.username) }}">{{ user.username }}</a>
+                                            </span>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty_content">
+                        <h3>No thing</h3>
+                    </div>
+
+                {% endif %}
+
+                </div>
+            </section>
+
+            {% include "static/navigation.html"%}
+
+        </div>
+
+    </div>
+</body>
+</html>
