@@ -39,8 +39,8 @@ token_auth = HTTPBasicAuth()
 
 def allowed_file(filename, allowed_extensions):
     return (
-        "." in filename
-        and filename.rsplit(".", 1)[1].lower() in allowed_extensions
+        "." in filename and
+        filename.rsplit(".", 1)[1].lower() in allowed_extensions
     )
 
 
@@ -489,12 +489,12 @@ def deleteCategory(category_id):
                 # is not related to the deleted category
                 # and redirect to the user profile
                 if (
-                    request.args.get("next", "")
-                    == url_for("category", category_id=category_id)
-                    or request.args.get("next", "")
-                    == url_for("editCategory", category_id=category_id)
-                    or request.args.get("next", "")
-                    == url_for("deleteCategory", category_id=category_id)
+                    request.args.get("next", "") ==
+                    url_for("category", category_id=category_id) or
+                    request.args.get("next", "") ==
+                    url_for("editCategory", category_id=category_id) or
+                    request.args.get("next", "") ==
+                    url_for("deleteCategory", category_id=category_id)
                 ):
                     return redirect(url_for("me"))
 
@@ -546,12 +546,12 @@ def deleteItem(item_id):
                 # Check if the next redirect is not related to the deleted item
                 # and redirect to the user profile
                 if (
-                    request.args.get("next", "")
-                    == url_for("item", item_id=item_id)
-                    or request.args.get("next", "")
-                    == url_for("editItem", item_id=item_id)
-                    or request.args.get("next", "")
-                    == url_for("deleteItem", item_id=item_id)
+                    request.args.get("next", "") ==
+                    url_for("item", item_id=item_id) or
+                    request.args.get("next", "") ==
+                    url_for("editItem", item_id=item_id) or
+                    request.args.get("next", "") ==
+                    url_for("deleteItem", item_id=item_id)
                 ):
                     return redirect(url_for("me"))
 
