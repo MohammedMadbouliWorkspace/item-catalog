@@ -77,14 +77,10 @@ def global_variables():
     """ global variables for templates environment """
     item_catalog_app.jinja_env.globals["ALL_CATEGORIES"] = act.all_categories()
     __logged_in_user__ = act.user(
-        pointer=str(login_session.get("user_id"))
+        pointer=login_session.get("user_id")
     )
     item_catalog_app.jinja_env.globals["USER"] = __logged_in_user__
     g.USER = __logged_in_user__
-    try:
-        print __logged_in_user__.__dict__
-    except:
-        pass
 
 
 def login_required(f):
@@ -234,7 +230,6 @@ def login():
             )
 
         login_session["user_id"] = user_id
-        login_session["USER"] = act.user(pointer=user_id)
         flash("You are now logged in as %s" % login_session["username"])
         return make_response(
             json.dumps({"id": login_session.get("user_id")}), 200
@@ -1046,7 +1041,12 @@ def api_v1_item():
 
                     if item.image:
                         try:
-                            os.remove(item.image[1:])
+                            os.remove(
+                                os.path.join(
+                                    __root_directory__,
+                                    item.image[1:]
+                                )
+                            )
                         except BaseException:
                             pass
 
@@ -1084,7 +1084,12 @@ def api_v1_item():
 
                     if item.image:
                         try:
-                            os.remove(item.image[1:])
+                            os.remove(
+                                os.path.join(
+                                    __root_directory__,
+                                    item.image[1:]
+                                )
+                            )
                         except BaseException:
                             pass
 

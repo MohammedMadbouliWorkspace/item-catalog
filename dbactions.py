@@ -17,6 +17,7 @@ def not_empty(type):
 
 @s.fetch
 def user(session, pointer):
+    pointer = str(pointer)
     try:
         user = session.query(User).filter_by(username=pointer).one()
         return user

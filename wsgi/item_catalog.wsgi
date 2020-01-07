@@ -18,4 +18,4 @@ sys.path.append('/usr/share/item_catalog/')
 
 ##Create appilcation for our app
 from item_catalog.server import item_catalog_app as application
-application.secret_key = "__secret_key__"
+application.secret_key = "secret_key"
