@@ -3,7 +3,7 @@ from dbsetup import Base, User, Category, Item, Colors
 import dbsession
 import re
 
-s = dbsession.session(Base, "sqlite:///catalog.db")
+s = dbsession.session(Base, "postgresql+psycopg2://grader:grader@127.0.0.1/catalog")
 
 
 def not_empty(type):
@@ -17,12 +17,17 @@ def not_empty(type):
 
 @s.fetch
 def user(session, pointer):
-    user = session.query(User).filter_by(username=pointer).first()
-    if user:
+    try:
+        user = session.query(User).filter_by(username=pointer).one()
         return user
-    else:
-        user = session.query(User).filter_by(id=pointer).first()
-        return user
+    except:
+        try:
+            pointer = int(pointer)
+            user = session.query(User).filter_by(id=pointer).one()
+            return user
+        except:
+            return None
+
 
 
 @s.fetch

@@ -13,7 +13,7 @@ colors = [
     "607d8b,f5f5f5",
 ]
 
-item_catalog_session = dbsession.session(Base, "sqlite:///catalog.db")
+item_catalog_session = dbsession.session(Base, "postgresql+psycopg2://grader:grader@127.0.0.1/catalog")
 
 
 @item_catalog_session.change

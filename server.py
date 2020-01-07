@@ -28,9 +28,12 @@ import dbsession
 
 item_catalog_app = Flask(__name__, template_folder="templates")
 
-item_catalog_session = dbsession.session(Base, "sqlite:///catalog.db")
+item_catalog_session = dbsession.session(Base, "postgresql+psycopg2://grader:grader@127.0.0.1/catalog")
 
-__client_id__ = json.load(open("client_secrets.json", "r"))["web"]["client_id"]
+__root_directory__ = os.path.realpath(os.path.dirname(__file__))
+__client_secrets_file_path__ = os.path.join(__root_directory__, 'client_secrets.json')
+
+__client_id__ = json.load(open(__client_secrets_file_path__, "r"))["web"]["client_id"]
 
 token_auth = HTTPBasicAuth()
 
@@ -72,11 +75,16 @@ def get_user_id(session, email):
 @item_catalog_app.before_request
 def global_variables():
     """ global variables for templates environment """
-    item_catalog_app.jinja_env.globals["USER"] = act.user(
-        pointer=login_session.get("user_id")
-    )
     item_catalog_app.jinja_env.globals["ALL_CATEGORIES"] = act.all_categories()
-    g.USER = act.user(pointer=login_session.get("user_id", ""))
+    __logged_in_user__ = act.user(
+        pointer=str(login_session.get("user_id"))
+    )
+    item_catalog_app.jinja_env.globals["USER"] = __logged_in_user__
+    g.USER = __logged_in_user__
+    try:
+        print __logged_in_user__.__dict__
+    except:
+        pass
 
 
 def login_required(f):
@@ -135,7 +143,7 @@ def login():
 
     if request.method == "POST":
         # Validate state token
-        if request.args.get("state") != login_session["state"]:
+        if request.args.get("state") != login_session.get("state"):
             response = make_response(
                 json.dumps("Invalid state parameter."), 401
             )
@@ -147,7 +155,7 @@ def login():
         try:
             # Upgrade the authorization code into a credentials object
             oauth_flow = flow_from_clientsecrets(
-                "client_secrets.json", scope=""
+                __client_secrets_file_path__, scope=""
             )
             oauth_flow.redirect_uri = "postmessage"
             credentials = oauth_flow.step2_exchange(code)
@@ -226,6 +234,7 @@ def login():
             )
 
         login_session["user_id"] = user_id
+        login_session["USER"] = act.user(pointer=user_id)
         flash("You are now logged in as %s" % login_session["username"])
         return make_response(
             json.dumps({"id": login_session.get("user_id")}), 200
@@ -384,7 +393,9 @@ def editItem(item_id):
                     # and remove it to replace it with the new one
                     if item.image:
                         try:
-                            os.remove(item.image[1:])
+                            os.remove(
+                                os.path.join(__root_directory__, item.image[1:])
+                            )
                         except BaseException:
                             pass
 
@@ -398,7 +409,8 @@ def editItem(item_id):
                         try:
                             image = open(
                                 os.path.join(
-                                    "resources/image", item_image_name[0]
+                                    __root_directory__ + "/resources/image",
+                                    item_image_name[0]
                                 ),
                                 "r",
                             )
@@ -411,7 +423,10 @@ def editItem(item_id):
 
                     # Save the new image
                     item_image.save(
-                        os.path.join("resources/image", item_image_name[0])
+                        os.path.join(
+                            __root_directory__ + "/resources/image",
+                            item_image_name[0]
+                        )
                     )
 
                 # Make edit action on database and check if passed correctly
@@ -525,7 +540,9 @@ def deleteItem(item_id):
                 # and remove it
                 if item.image:
                     try:
-                        os.remove(item.image[1:])
+                        os.remove(
+                            os.path.join(__root_directory__, item.image[1:])
+                        )
                     except BaseException:
                         pass
 
@@ -620,7 +637,11 @@ def addItem():
             while image_exist:
                 try:
                     image = open(
-                        os.path.join("resources/image", item_image_name), "r"
+                        os.path.join(
+                            __root_directory__ + "/resources/image",
+                            item_image_name[0]
+                        ),
+                        "r",
                     )
                     image.close()
                     item_image_name[0] = random_filename(item_image_extension)
@@ -629,7 +650,10 @@ def addItem():
 
             # Save the new image
             item_image.save(
-                os.path.join("resources/image", item_image_name[0])
+                os.path.join(
+                    __root_directory__ + "/resources/image",
+                    item_image_name[0]
+                )
             )
 
         # Make add action on database and check if passed correctly
